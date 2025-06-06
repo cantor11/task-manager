@@ -10,8 +10,10 @@ const TaskChart = () => {
     const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
     const tasksByDay = days.map(day => ({ day, count: 0 }));
     
-    // Count tasks by day of the week
-    tasks.forEach(task => {
+    // Count only pending tasks by day of the week (exclude completed tasks)
+    const pendingTasks = tasks.filter(task => task.status.toLowerCase() !== 'completada');
+    
+    pendingTasks.forEach(task => {
       const date = new Date(task.dueDate);
       // JS Date has 0 (Sunday) to 6 (Saturday), but we need 0 (Monday) to 6 (Sunday)
       let dayIndex = date.getDay() - 1;

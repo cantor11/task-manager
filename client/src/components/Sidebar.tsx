@@ -10,7 +10,7 @@ type SidebarProps = {
 };
 
 const Sidebar = ({ activeSection, onSectionChange }: SidebarProps) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useUserStore();
   const [, setLocation] = useLocation();
   const isMobile = useIsMobile();

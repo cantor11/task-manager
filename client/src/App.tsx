@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { queryClient } from "./lib/queryClient";
 import LoginPage from "@/pages/LoginPage";
+import RegisterPage from "@/pages/RegisterPage";
 import DashboardPage from "@/pages/DashboardPage";
 import NotFound from "@/pages/not-found";
 import { useUserStore } from "@/stores/userStore";
@@ -27,9 +28,9 @@ function App() {
   useEffect(() => {
     // Redirect based on authentication state
     if (!isLoading) {
-      if (isAuthenticated && location === "/login") {
-        setLocation("/");
-      } else if (!isAuthenticated && location !== "/login") {
+      if (isAuthenticated && (location === "/login" || location === "/register")) {
+        setLocation("/dashboard");
+      } else if (!isAuthenticated && location !== "/login" && location !== "/register") {
         setLocation("/login");
       }
     }
@@ -49,7 +50,8 @@ function App() {
         <Toaster />
         <Switch>
           <Route path="/login" component={LoginPage} />
-          <Route path="/" component={DashboardPage} />
+          <Route path="/register" component={RegisterPage} />
+          <Route path="/dashboard" component={DashboardPage} />
           <Route component={NotFound} />
         </Switch>
       </TooltipProvider>
