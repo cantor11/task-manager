@@ -44,40 +44,42 @@ const ReminderList = () => {
 
   return (
     <div className="space-y-4">
-      {activeTasks.length > 0 ? (
-        activeTasks.map(task => {
-          const reminder = reminders.find(r => r.taskId === task.id);
-          return (
-            <div 
-              key={task.id}
-              className="bg-white p-4 rounded-lg shadow flex items-center justify-between"
-            >
-              <div>
-                <h3 className="font-medium overflow-hidden overflow-ellipsis line-clamp-2 max-w-[200px]">{task.title}</h3>
-                <p className="text-sm text-gray-500">
-                  Recordatorio: {reminder ? formatMinutesBefore(reminder.minutesBefore) : '30min antes'}
-                </p>
+      <div className="max-h-[calc(76px*10)] overflow-y-auto pr-1">
+        {activeTasks.length > 0 ? (
+          activeTasks.map(task => {
+            const reminder = reminders.find(r => r.taskId === task.id);
+            return (
+              <div 
+                key={task.id}
+                className="bg-white p-4 rounded-lg shadow flex items-center justify-between mb-4"
+              >
+                <div>
+                  <h3 className="font-medium overflow-hidden overflow-ellipsis line-clamp-2 max-w-[200px]">{task.title}</h3>
+                  <p className="text-sm text-gray-500">
+                    Recordatorio: {reminder ? formatMinutesBefore(reminder.minutesBefore) : '30min antes'}
+                  </p>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <button
+                    className="text-gray-600 hover:text-primary"
+                    onClick={() => handleReminderClick(task.id)}
+                  >
+                    <FaEdit size={16} />
+                  </button>
+                  <Switch 
+                    checked={reminder?.enabled ?? false} 
+                    onCheckedChange={() => handleToggleChange(task.id)}
+                  />
+                </div>
               </div>
-              <div className="flex items-center space-x-4">
-                <button
-                  className="text-gray-600 hover:text-primary"
-                  onClick={() => handleReminderClick(task.id)}
-                >
-                  <FaEdit size={16} />
-                </button>
-                <Switch 
-                  checked={reminder?.enabled ?? false} 
-                  onCheckedChange={() => handleToggleChange(task.id)}
-                />
-              </div>
-            </div>
-          );
-        })
-      ) : (
-        <div className="bg-white p-6 rounded-lg shadow text-center text-gray-500">
-          No hay tareas pendientes. Agrega una nueva tarea para configurar recordatorios.
-        </div>
-      )}
+            );
+          })
+        ) : (
+          <div className="bg-white p-6 rounded-lg shadow text-center text-gray-500">
+            No hay tareas pendientes. Agrega una nueva tarea para configurar recordatorios.
+          </div>
+        )}
+      </div>
       
       <ReminderModal 
         isOpen={isModalOpen} 
