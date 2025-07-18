@@ -3,8 +3,6 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Todas las rutas de la API deben tener el prefijo /api
-
   // --- Rutas para la gestión de Tareas ---
 
   /**
@@ -70,7 +68,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.status(204).send();
   });
 
-  // Aquí se pueden añadir más rutas para otras entidades (ej. usuarios)
 
   const httpServer = createServer(app);
 

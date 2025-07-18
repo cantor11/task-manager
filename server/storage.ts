@@ -21,7 +21,6 @@ export interface IStorage {
 
 /**
  * Implementación de almacenamiento en memoria para los usuarios.
- * Útil para desarrollo y pruebas sin necesidad de una base de datos persistente.
  */
 class MemStorage {
   private users: Map<number, User>;
@@ -53,7 +52,6 @@ class MemStorage {
 /**
  * Clase principal de almacenamiento que combina diferentes implementaciones.
  * Utiliza MemStorage para usuarios y FirestoreStorage para tareas.
- * Esto permite desacoplar la lógica de cada entidad.
  */
 class Storage implements IStorage {
   private userStorage = new MemStorage();
