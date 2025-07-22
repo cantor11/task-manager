@@ -2,7 +2,7 @@ name: Tests CI
 
 on:
   push:
-    branches: [ junior ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -26,17 +26,29 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
+    - name: Create dummy Firebase credentials
+      run: |
+        echo '{"type":"service_account","project_id":"dummy"}' > server/taskService/serviceAccountKey.json
+
     - name: Run type checking
       run: npm run check
+      env:
+        FIREBASE_SERVICE_ACCOUNT: '{"type":"service_account","project_id":"dummy"}'
 
     - name: Run unit and integration tests
       run: npm test
+      env:
+        FIREBASE_SERVICE_ACCOUNT: '{"type":"service_account","project_id":"dummy"}'
 
     - name: Start server for E2E tests
       run: npm run dev & npx wait-on http://localhost:5000
+      env:
+        FIREBASE_SERVICE_ACCOUNT: '{"type":"service_account","project_id":"dummy"}'
 
     - name: Run E2E tests
       run: npm run test:e2e
+      env:
+        FIREBASE_SERVICE_ACCOUNT: '{"type":"service_account","project_id":"dummy"}'
 
     - name: Upload test results
       if: always()

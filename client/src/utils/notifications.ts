@@ -51,7 +51,7 @@ export const sendNotification = (title: string, options: NotificationOptions = {
 };
 
 // Schedule a notification for a specific task
-export const scheduleNotification = (task: Task, minutesBefore: number): void => {
+export const scheduleNotification = (task: Task, minutesBefore: number) => {
   const { settings } = useSettingsStore.getState();
   
   // Only schedule if notifications are enabled
@@ -59,7 +59,7 @@ export const scheduleNotification = (task: Task, minutesBefore: number): void =>
   
   // Calculate when to show the notification
   const taskTime = new Date(task.dueDate).getTime();
-  const notificationTime = taskTime - (minutesBefore * 60 * 1000); // Convert minutes to milliseconds
+  const notificationTime = taskTime - (minutesBefore * 60 * 1000);
   const now = Date.now();
   
   // Only schedule future notifications
@@ -71,9 +71,10 @@ export const scheduleNotification = (task: Task, minutesBefore: number): void =>
       });
     }, notificationTime - now);
     
-    // Store timeout id so it can be cleared if needed
-    return () => clearTimeout(timeoutId);
+    // Store timeout id
+    return timeoutId;
   }
+  return undefined;
 };
 
 // Schedule reminders for all active tasks

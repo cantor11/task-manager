@@ -1,6 +1,8 @@
 // taskService/firebase.ts
 import admin from 'firebase-admin';
-import serviceAccount from './serviceAccountKey.json'; // lo descargas desde Firebase
+
+// Opción 1: Usar variables de entorno (recomendado para CI/CD)
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || '{}');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
