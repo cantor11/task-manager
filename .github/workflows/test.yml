@@ -25,8 +25,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - name: Update npm
-        run: npm install -g npm@latest
+
+      - name: Remove package-lock.json
+        run: rm package-lock.json
 
       - name: Install dependencies
         run: npm install
