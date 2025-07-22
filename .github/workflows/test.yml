@@ -2,7 +2,7 @@ name: Tests CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ junior ]
   pull_request:
     branches: [ main ]
 
