@@ -32,6 +32,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Create dummy Firebase credentials
+        run: |
+          echo '{"type":"service_account","project_id":"dummy"}' > server/taskService/serviceAccountKey.json
+
       - name: Build project
         run: npm run build
 
