@@ -3,6 +3,7 @@ import { useLocation } from 'wouter';
 import { FaTasks, FaCalendar, FaBell, FaCog, FaSignOutAlt, FaBars, FaTimes } from 'react-icons/fa';
 import { useUserStore } from '@/stores/userStore';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { User } from '@shared/schema';  // Asegúrate de que esta importación esté al inicio del archivo
 
 type SidebarProps = {
   activeSection: string;
@@ -121,14 +122,14 @@ const Sidebar = ({ activeSection, onSectionChange }: SidebarProps) => {
           <div className="flex items-center">
             {/* User avatar */}
             <img 
-              src={user?.avatar || "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"} 
+              src={user?.avatar ?? "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"} 
               alt="User avatar" 
               className={`h-10 w-10 rounded-full ${!isOpen ? 'mx-auto' : ''}`} 
             />
             {isOpen && (
               <>
                 <div className="ml-3">
-                  <p className="text-sm font-medium">{user?.name || 'Usuario'}</p>
+                  <p className="text-sm font-medium">{user?.name ?? 'Usuario'}</p>
                 </div>
                 <button 
                   onClick={handleLogout}
