@@ -9,6 +9,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Link } from 'wouter';
 
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/firebase';
+
 // Register form schema
 const registerSchema = z.object({
   username: z.string().min(1, 'El nombre de usuario es requerido'),
@@ -40,15 +43,23 @@ const RegisterPage = () => {
   const onSubmit = async (values: RegisterFormValues) => {
     setIsLoading(true);
     try {
-      // Log form data
-      console.log({ 
-        username: values.username, 
-        email: values.email, 
-        password: values.password 
-      });
-      
-      // Redirect to login page
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+    
+      const user = userCredential.user;
+    
+      console.log('Usuario creado:', user);
+    
+      // Aquí podrías guardar el username en Firestore, si lo deseas
+      // O continuar directo al login
       setLocation('/login');
+    
+    } catch (error: any) {
+      console.error('Error al registrar:', error.message);
+      // Aquí podrías usar un toast o alerta para mostrarlo al usuario
     } finally {
       setIsLoading(false);
     }

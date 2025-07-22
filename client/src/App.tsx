@@ -26,6 +26,7 @@ function App() {
   }, [checkAuth]);
 
   useEffect(() => {
+    console.log({ isAuthenticated, location, isLoading });
     // Redirect based on authentication state
     if (!isLoading) {
       if (isAuthenticated && (location === "/login" || location === "/register")) {

@@ -10,9 +10,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/firebase';
+
 // Login form schema
 const loginSchema = z.object({
-  username: z.string().min(1, 'El nombre de usuario es requerido'),
+  email: z.string().email('Ingrese un correo electrónico válido'),
   password: z.string().min(1, 'La contraseña es requerida'),
 });
 
@@ -28,7 +31,7 @@ const LoginPage = () => {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: '',
+      email: '',
       password: '',
     },
   });
@@ -36,9 +39,17 @@ const LoginPage = () => {
   const onSubmit = async (values: LoginFormValues) => {
     setIsLoading(true);
     try {
-      await login(values.username, values.password);
-      setLocation('/');
-    } catch (error) {
+      const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
+      const user = userCredential.user;
+
+      console.log("Usuario autenticado:", user);
+
+      // Asegúrate de guardar al usuario en el estado global
+      login(user);
+
+      // Ahora redirige
+      setLocation('/dashboard');
+    } catch (error: any) {
       toast({
         title: 'Error de inicio de sesión',
         description: 'Credenciales incorrectas. Por favor, inténtalo de nuevo.',
@@ -53,7 +64,12 @@ const LoginPage = () => {
   const handleDemoLogin = async () => {
     setIsLoading(true);
     try {
-      await login('demo', 'demo');
+      const userCredential = await signInWithEmailAndPassword(auth, 'demo@demo.com', 'demo123');
+      const user = userCredential.user;
+    
+      console.log("Usuario demo autenticado:", user);
+      login(user); // aquí sí pasa el User de Firebase, como espera el store
+    
       setLocation('/dashboard');
     } catch (error) {
       toast({
@@ -65,7 +81,6 @@ const LoginPage = () => {
       setIsLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-primary p-4">
       <Card className="w-full max-w-md">
@@ -78,12 +93,12 @@ const LoginPage = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
-                name="username"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nombre de usuario</FormLabel>
+                    <FormLabel>Correo electrónico</FormLabel>
                     <FormControl>
-                      <Input placeholder="Usuario" {...field} />
+                      <Input type="email" placeholder="correo@ejemplo.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
