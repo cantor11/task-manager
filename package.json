@@ -111,7 +111,8 @@
     "ts-jest": "^29.4.0",
     "tsx": "^4.19.1",
     "typescript": "5.6.3",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "wait-on": "^8.0.3"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.8"
