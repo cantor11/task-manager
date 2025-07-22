@@ -1,13 +1,16 @@
 import { create } from 'zustand';
 import type { User as FirebaseUser } from 'firebase/auth';
 import { useTaskStore } from './taskStore';
+import { User } from '@shared/schema';
+
+type ExtendedUser = FirebaseUser & Partial<User>;
 
 interface UserState {
-  user: FirebaseUser | null;
+  user: ExtendedUser | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
-  login: (user: FirebaseUser) => void;
+  login: (user: ExtendedUser) => void;
   logout: () => void;
   checkAuth: () => Promise<void>;
 }
