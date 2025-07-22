@@ -10,7 +10,7 @@
     "check": "tsc",
     "db:push": "drizzle-kit push",
     "test": "jest",
-    "test:e2e": "jest server/tests/e2e"
+    "test:e2e": "start-server-and-test start http://localhost:5000 'jest --testMatch=**/*.e2e.test.ts'"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -106,6 +106,7 @@
     "jest": "^30.0.4",
     "playwright": "^1.54.1",
     "postcss": "^8.4.47",
+    "start-server-and-test": "^2.0.12",
     "supertest": "^7.1.3",
     "tailwindcss": "^3.4.17",
     "ts-jest": "^29.4.0",

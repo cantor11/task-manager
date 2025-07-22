@@ -2,6 +2,17 @@ import request from "supertest";
 import express from "express";
 import { registerRoutes } from "../routes";
 
+// Mock de Firebase Admin
+jest.mock('../taskService/firebase', () => ({
+  db: {
+    collection: jest.fn(() => ({
+      add: jest.fn(),
+      doc: jest.fn(),
+      get: jest.fn(),
+    })),
+  },
+}));
+
 describe("Pruebas de integración - Rutas de usuarios", () => {
   const app = express();
   app.use(express.json());

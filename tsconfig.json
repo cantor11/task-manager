@@ -6,6 +6,8 @@
     "skipLibCheck": true,
     "jsx": "react-jsx",
     "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -19,6 +21,6 @@
       "@shared/*": ["./shared/*"]
     }
   },
-  "include": ["client", "shared"],
+  "include": ["client", "shared", "server"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
