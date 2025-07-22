@@ -2,9 +2,9 @@ name: Tests CI
 
 on:
   push:
-    branches: [ junior ]
+    branches: [ junior ] # Ya está configurado para la rama junior
   pull_request:
-    branches: [ main ]
+    branches: [ junior ]
 
 jobs:
   test:
