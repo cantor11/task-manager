@@ -1,5 +1,5 @@
 // server/routes.ts
-import type { Express } from "express";
+import { Router, type Express } from "express";
 import { createServer, type Server } from "http";
 
 // Importamos los controladores del CRUD
@@ -12,6 +12,10 @@ import {
   getUser
 } from "./controller";
 
+export const userRoutes = Router();
+userRoutes.post("/users", createUser);
+userRoutes.get("/users/:id", getUser);
+
 // Esta función registra todas las rutas y retorna el servidor HTTP
 export async function registerRoutes(app: Express): Promise<Server> {
   // Prefijo común: /api
@@ -19,8 +23,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/tasks", createTask);
   app.put("/api/tasks/:id", updateTask);
   app.delete("/api/tasks/:id", deleteTask);
-  app.post("/api/users", createUser);
-  app.get("/api/users/:id", getUser);
+  app.use("/api", userRoutes);
 
   const httpServer = createServer(app);
   return httpServer;

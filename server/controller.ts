@@ -82,6 +82,11 @@ export const deleteTask = async (req: Request, res: Response) => {
 let users: any[] = [];
 let nextUserId = 1;
 
+export const resetUsers = () => {
+  users = [];
+  nextUserId = 1;
+};
+
 export const createUser = (req: Request, res: Response) => {
   const { username, password } = req.body;
   if (!username || !password) return res.status(400).json({ message: "Datos inválidos" });
