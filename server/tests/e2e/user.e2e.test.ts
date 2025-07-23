@@ -1,6 +1,7 @@
-import request from "supertest";
+import supertest from "supertest";
 
 const API_URL = "http://localhost:5000";
+const request = supertest;
 
 describe("E2E - Usuarios", () => {
   beforeAll(async () => {
