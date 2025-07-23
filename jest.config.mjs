@@ -11,4 +11,5 @@ export default {
     '^@shared/(.*)$': '<rootDir>/shared/$1'
   },
   extensionsToTreatAsEsm: ['.ts'],
+  testPathIgnorePatterns: ['/node_modules/', '/dist/', '/server/tests/e2e/'],
 };

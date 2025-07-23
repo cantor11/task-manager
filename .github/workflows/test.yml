@@ -2,7 +2,7 @@ name: Tests CI
 
 on:
   push:
-    branches: [ junior ] # Ya está configurado para la rama junior
+    branches: [ junior ]
   pull_request:
     branches: [ junior ]
 
@@ -28,27 +28,22 @@ jobs:
 
     - name: Create dummy Firebase credentials
       run: |
-        echo '{"type":"service_account","project_id":"dummy"}' > server/taskService/serviceAccountKey.json
+        echo '{"type":"service_account","project_id":"dummy","private_key":"dummy_key"}' > server/taskService/serviceAccountKey.json
 
     - name: Run type checking
       run: npm run check
       env:
-        FIREBASE_SERVICE_ACCOUNT: '{"type":"service_account","project_id":"dummy"}'
+        FIREBASE_SERVICE_ACCOUNT: '{"type":"service_account","project_id":"dummy","private_key":"dummy_key"}'
 
     - name: Run unit and integration tests
       run: npm test
       env:
-        FIREBASE_SERVICE_ACCOUNT: '{"type":"service_account","project_id":"dummy"}'
-
-    - name: Start server for E2E tests
-      run: npm run dev & npx wait-on http://localhost:5000
-      env:
-        FIREBASE_SERVICE_ACCOUNT: '{"type":"service_account","project_id":"dummy"}'
+        FIREBASE_SERVICE_ACCOUNT: '{"type":"service_account","project_id":"dummy","private_key":"dummy_key"}'
 
     - name: Run E2E tests
       run: npm run test:e2e
       env:
-        FIREBASE_SERVICE_ACCOUNT: '{"type":"service_account","project_id":"dummy"}'
+        FIREBASE_SERVICE_ACCOUNT: '{"type":"service_account","project_id":"dummy","private_key":"dummy_key"}'
 
     - name: Upload test results
       if: always()
